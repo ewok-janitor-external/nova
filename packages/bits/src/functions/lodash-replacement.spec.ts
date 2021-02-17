@@ -23,25 +23,99 @@ function combinate<O extends Record<string | number, any[]>>(obj: O) {
 fdescribe("lodash replacement >", () => {
     const METHODS = [
         {
+            key: "pull",
+            argsNum: 2,
+        },
+        {
             key: "get",
             argsNum: 2,
         },
+        {
+            key: "isEmpty",
+            argsNum: 1,
+        },
+        {
+            key: "isNil",
+            argsNum: 1,
+        },
+        {
+            key: "uniq",
+            argsNum: 1,
+        },
+        // {
+        //     key: "sortBy",
+        //     argsNum: 2,
+        // },
+        // // {
+        // //     key: "debounce",
+        // //     argsNum: 3,
+        // // },
+        // {
+        //     key: "size",
+        //     argsNum: 1,
+        // },
+        // {
+        //     key: "forEach",
+        //     argsNum: 2,
+        // },
+        // {
+        //     key: "assign",
+        //     argsNum: 2,
+        // },
+        // {
+        //     key: "has",
+        //     argsNum: 2,
+        // },
+        // {
+        //     key: "chunk",
+        //     argsNum: 2,
+        // },
+        // {
+        //     key: "last",
+        //     argsNum: 1,
+        // },
+        // {
+        //     key: "reject",
+        //     argsNum: 2,
+        // },
+        // {
+        //     key: "keyBy",
+        //     argsNum: 2,
+        // },
     ];
 
-    const TESTING_INPUT = [
+    const TESTING_INPUT: any[] = [
         undefined,
         null,
         NaN,
-        "string value ",
+        0,
+        "string value",
         "customPath",
         123,
         "123",
+        "x",
+        "y",
         { x: 1 },
         {
             customPath: {
                 y: "asd",
             },
         },
+        {},
+        [],
+        () => {},
+        (obj: Record<string, unknown>, key: string) => obj[key],
+        (arr: any[], key: number) => arr[key],
+        (arr: any[], key: number) => arr[1],
+        (o: Record<string, any>) => String.fromCharCode(o.code),
+        [
+            { "dir": "left", "code": 97 },
+            { "dir": "right", "code": 100 },
+        ],
+        [1, 2, 3, 123],
+        ["1", "2", "3", "123"],
+        2,
+        -12,
     ];
 
     METHODS.forEach(method => {
@@ -61,22 +135,25 @@ fdescribe("lodash replacement >", () => {
             combos.forEach(combo => {
                 const args = Object.values(combo);
 
-                it(`Method: ${method.key} | args: ${args} | should be as lodash`, () => {
-                    let novaResult;
-                    try {
-                        novaResult = novaMethod(...args);
-                    } catch (error) {
-                        novaResult = "ERROR";
-                    }
+                let novaResult: any;
+                const novaArgs = [...args];
+                try {
+                    novaResult = novaMethod(...novaArgs);
+                } catch (error) {
+                    novaResult = "ERROR";
+                }
 
-                    let lodashResult;
-                    try {
-                        lodashResult = novaMethod(...args);
-                    } catch (error) {
-                        lodashResult = "ERROR";
-                    }
+                let lodashResult: any;
+                const lodashArgs = [...args];
+                try {
+                    lodashResult = lodashMethod(...lodashArgs);
+                } catch (error) {
+                    lodashResult = "ERROR";
+                }
 
+                it(`Method: ${method.key} | args: ${args} | should be as lodash. Nova result: ${JSON.stringify(novaResult)} Lodash result: ${JSON.stringify(lodashResult)}`, () => {
                     expect(novaResult).toEqual(lodashResult);
+                    expect(novaArgs).toEqual(lodashArgs);
                 });
             });
         }
