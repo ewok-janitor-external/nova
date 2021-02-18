@@ -22,66 +22,66 @@ function combinate<O extends Record<string | number, any[]>>(obj: O) {
 
 fdescribe("lodash replacement >", () => {
     const METHODS = [
-        // {
-        //     key: "pull",
-        //     argsNum: 2,
-        // },
+        {
+            key: "pull",
+            argsNum: 2,
+        },
         {
             key: "get",
             argsNum: 2,
         },
+        {
+            key: "isEmpty",
+            argsNum: 1,
+        },
+        {
+            key: "isNil",
+            argsNum: 1,
+        },
+        {
+            key: "uniq",
+            argsNum: 1,
+        },
+        {
+            key: "sortBy",
+            argsNum: 2,
+        },
         // {
-        //     key: "isEmpty",
-        //     argsNum: 1,
+        //     key: "debounce",
+        //     argsNum: 3,
         // },
-        // {
-        //     key: "isNil",
-        //     argsNum: 1,
-        // },
-        // {
-        //     key: "uniq",
-        //     argsNum: 1,
-        // },
-        // {
-        //     key: "sortBy",
-        //     argsNum: 2,
-        // },
-        // // {
-        // //     key: "debounce",
-        // //     argsNum: 3,
-        // // },
-        // {
-        //     key: "size",
-        //     argsNum: 1,
-        // },
-        // {
-        //     key: "forEach",
-        //     argsNum: 2,
-        // },
-        // {
-        //     key: "assign",
-        //     argsNum: 2,
-        // },
-        // {
-        //     key: "has",
-        //     argsNum: 2,
-        // },
-        // {
-        //     key: "chunk",
-        //     argsNum: 2,
-        // },
-        // {
-        //     key: "last",
-        //     argsNum: 1,
-        // },
-        // {
-        //     key: "reject",
-        //     argsNum: 2,
-        // },
-        // {
-        //     key: "keyBy",
-        //     argsNum: 2,
-        // },
+        {
+            key: "size",
+            argsNum: 1,
+        },
+        {
+            key: "forEach",
+            argsNum: 2,
+        },
+        {
+            key: "assign",
+            argsNum: 2,
+        },
+        {
+            key: "has",
+            argsNum: 2,
+        },
+        {
+            key: "chunk",
+            argsNum: 2,
+        },
+        {
+            key: "last",
+            argsNum: 1,
+        },
+        {
+            key: "reject",
+            argsNum: 2,
+        },
+        {
+            key: "keyBy",
+            argsNum: 2,
+        },
     ];
 
     const TESTING_INPUT: any[] = [
@@ -95,6 +95,7 @@ fdescribe("lodash replacement >", () => {
         "123",
         "x",
         "y",
+        "",
         { x: 1 },
         {
             customPath: {
@@ -113,6 +114,7 @@ fdescribe("lodash replacement >", () => {
             { "dir": "right", "code": 100 },
         ],
         [1, 2, 3, 123],
+        [undefined],
         ["1", "2", "3", "123"],
         2,
         -12,
@@ -157,7 +159,7 @@ fdescribe("lodash replacement >", () => {
                     `, () => {
 
                     if (novaResult) {
-                        expect(novaResult).toEqual(lodashResult)
+                        expect(novaResult).toEqual(lodashResult);
                     } else {
                         expect([lodashResult, undefined, null].includes(novaResult)).toEqual(true);
                     }
