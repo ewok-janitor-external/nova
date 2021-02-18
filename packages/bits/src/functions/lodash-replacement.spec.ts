@@ -22,14 +22,14 @@ function combinate<O extends Record<string | number, any[]>>(obj: O) {
 
 fdescribe("lodash replacement >", () => {
     const METHODS = [
-        {
-            key: "pull",
-            argsNum: 2,
-        },
         // {
-        //     key: "get",
+        //     key: "pull",
         //     argsNum: 2,
         // },
+        {
+            key: "get",
+            argsNum: 2,
+        },
         // {
         //     key: "isEmpty",
         //     argsNum: 1,
@@ -155,7 +155,12 @@ fdescribe("lodash replacement >", () => {
                     \nNova result: ${JSON.stringify(novaResult)} Lodash result: ${JSON.stringify(lodashResult)}
                     \nNova args: ${JSON.stringify(novaArgs)}; Lodash args: ${JSON.stringify(lodashArgs)}
                     `, () => {
-                    expect([lodashResult, undefined, null].includes(novaResult)).toEqual(true);
+
+                    if (novaResult) {
+                        expect(novaResult).toEqual(lodashResult)
+                    } else {
+                        expect([lodashResult, undefined, null].includes(novaResult)).toEqual(true);
+                    }
                     expect(JSON.stringify(novaArgs)).toEqual(JSON.stringify(lodashArgs));
                 });
             });

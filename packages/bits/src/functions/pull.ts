@@ -8,12 +8,11 @@ export function pull(origin: unknown[], ...removeList: unknown[]) {
         return undefined;
     }
 
-    const removeSet = new Set(removeList);
-
-
     if (!origin.filter) {
         return origin;
     }
+
+    const removeSet = new Set(removeList);
 
     return origin.filter((el) => !removeSet.has(el));
 }
