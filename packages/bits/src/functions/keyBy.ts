@@ -1,4 +1,3 @@
-
 const keyByArray = (array: Array<any>, key: string) =>
     (array || []).reduce((r, x) => ({ ...r, [key ? x[key] : x]: x }), {});
 

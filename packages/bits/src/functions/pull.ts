@@ -1,7 +1,19 @@
+import { isNil } from "./isNil";
+
 /**
  * https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_pull
  */
-export function pull(arr: unknown[], ...removeList: unknown[]) {
+export function pull(origin: unknown[], ...removeList: unknown[]) {
+    if (isNil(origin)) {
+        return undefined;
+    }
+
     const removeSet = new Set(removeList);
-    return arr.filter((el) => !removeSet.has(el));
+
+
+    if (!origin.filter) {
+        return origin;
+    }
+
+    return origin.filter((el) => !removeSet.has(el));
 }
