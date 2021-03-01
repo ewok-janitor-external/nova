@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+    snyk: snyk/snyk@0.0.12
 jobs:
     bits-build:
         working_directory: ~/nova
@@ -451,6 +453,16 @@ jobs:
             -   run:
                     name: Trigger release branch
                     command: yarn run trigger-pipeline-build-ci ${RELEASE_BRANCH}
+    snyk-scan:
+        working_directory: ~/nova
+        docker:
+            -   image: circleci/node:12-browsers
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   snyk/scan:
+                    monitor-on-build: true
+                    additional-arguments: "--dev --all-projects --strict-out-of-sync=false"
 workflows:
     version: 2.1
     nova:
@@ -563,6 +575,9 @@ workflows:
                                 - main
                                 - /release\/.*/
                                 - next
+            -   snyk-scan:
+                    requires:
+                        - dashboards-build
     nova-release:
         jobs:
             -   release-approval:
